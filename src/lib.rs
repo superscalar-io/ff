@@ -291,6 +291,18 @@ pub trait PrimeField: Field + From<u64> {
     /// encodings of field elements should be treated as opaque.
     fn to_repr(&self) -> Self::Repr;
 
+    /// Converts an element of the prime field into the raw byte representation for
+    /// this field.
+    fn to_repr_without_montgomery(&self) -> Self::Repr {
+        self.to_repr()
+    }
+
+    /// Converts the raw byte representation into an element of the prime field  for
+    /// this field.
+    fn from_repr_without_montgomery(repr: Self::Repr) -> Option<Self> {
+        Self::from_repr_vartime(repr)
+    }
+
     /// Returns true iff this element is odd.
     fn is_odd(&self) -> Choice;
 
